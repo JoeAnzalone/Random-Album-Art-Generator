@@ -3,7 +3,7 @@ var context = canvas.getContext('2d');
 canvas.width = 600;
 canvas.height = 600;
 
-function loadImage(url) {
+function loadImage(url, callback) {
     var img = new Image();
 
     img.addEventListener('load', function() {
@@ -28,6 +28,7 @@ function loadImage(url) {
         }
 
         context.drawImage(this, offSetX, offSetY, img.width, img.height);
+        callback();
     });
 
     img.src = url;
@@ -35,8 +36,11 @@ function loadImage(url) {
 
 function reqListener () {
     var random_stuff = JSON.parse(this.response);
-    console.log(random_stuff);
-    loadImage(random_stuff.photo_url);
+
+    loadImage(random_stuff.photo_url, function () {
+        context.font = '48px sans-serif';
+        context.fillText(random_stuff.album_title, 10, 50);
+    });
 }
 
 var xhr = new XMLHttpRequest();
