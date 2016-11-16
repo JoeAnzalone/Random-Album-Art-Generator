@@ -36,7 +36,25 @@ function random_flickr_photo($api_key)
 
 function random_band_name()
 {
-    return '';
+    $url = 'https://en.wikipedia.org/wiki/Special:Random';
+    $ch = curl_init($url);
+
+    $options = [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_HEADER => true,
+        CURLOPT_NOBODY => true,
+    ];
+
+    curl_setopt_array($ch, $options);
+
+    $headers_string = curl_exec($ch);
+
+    $location_line = preg_match('#^Location:.+/wiki/(.*)#m', $headers_string, $matches);
+    $location = trim($matches[1]);
+
+    $title = str_replace('_', ' ', $location);
+
+    return $title;
 }
 
 function random_album_title()
@@ -48,7 +66,12 @@ function random_album_title()
 
     $words = explode(' ', $quote);
     $last_words = array_splice($words, -5);
-    return implode(' ', $last_words);
+
+    $last_words_string = implode(' ', $last_words);
+
+    $last_words_string = trim($last_words_string, '.');
+
+    return $last_words_string;
 }
 
 $random = [

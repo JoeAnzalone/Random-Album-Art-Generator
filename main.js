@@ -39,7 +39,19 @@ function reqListener () {
 
     loadImage(random_stuff.photo_url, function () {
         context.font = '48px sans-serif';
-        context.fillText(random_stuff.album_title, 10, 50);
+        context.lineWidth = 8;
+
+        context.strokeStyle = 'white';
+        context.fillStyle = 'black';
+        context.strokeText(random_stuff.band_name, 10, 50);
+        context.fillText(random_stuff.band_name, 10, 50);
+
+        context.font = '28px serif';
+        context.strokeStyle = 'black';
+        context.fillStyle = 'white';
+        var offsetBottom = canvas.height - 50;
+        context.strokeText(random_stuff.album_title, 10, offsetBottom);
+        context.fillText(random_stuff.album_title, 10, offsetBottom);
     });
 }
 
