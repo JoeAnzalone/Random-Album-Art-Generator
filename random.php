@@ -1,5 +1,6 @@
 <?php
 
+require_once 'vendor/autoload.php';
 require_once 'flickr_api.php';
 $config = require_once 'config.php';
 
@@ -40,7 +41,14 @@ function random_band_name()
 
 function random_album_title()
 {
-    return '';
+    $html = file_get_contents('http://www.quotationspage.com/random.php3');
+    $crawler = new Symfony\Component\DomCrawler\Crawler($html);
+    $quote = $crawler->filter('.quote')->last()->text();
+    $quote = trim($quote);
+
+    $words = explode(' ', $quote);
+    $last_words = array_splice($words, -5);
+    return implode(' ', $last_words);
 }
 
 $random = [
