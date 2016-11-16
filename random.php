@@ -49,10 +49,11 @@ function random_band_name()
 
     $headers_string = curl_exec($ch);
 
-    $location_line = preg_match('#^Location:.+/wiki/(.*)#m', $headers_string, $matches);
-    $location = trim($matches[1]);
+    preg_match('#^Location:.+/wiki/(.*)#m', $headers_string, $matches);
+    $title = trim($matches[1]);
 
-    $title = str_replace('_', ' ', $location);
+    $title = str_replace('_', ' ', $title);
+    $title = urldecode($title);
 
     return $title;
 }
